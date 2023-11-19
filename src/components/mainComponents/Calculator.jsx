@@ -216,6 +216,7 @@ const Calculator = () => {
   }, [timeSections]);
 
   const addTimeSection = () => {
+    setShowAllTime(false)
     setTimeSections((prevSections) => [
       ...prevSections,
       { startTime: "", endTime: "", price: "", totalTime: {hours : 0 , minutes :0}, totalPrice: 0 , show : false},
@@ -261,6 +262,13 @@ const Calculator = () => {
   const [showAllTime , setShowAllTime] = useState(false)
 
   const calcAllTimeAndPrice = () => {
+    if (timeSections.length == 0 ) {
+      Swal.fire({
+        icon: "error",
+        text: "يجب اضافة  وقت جديد على الأقل",
+      });
+      return
+    }
     console.log(timeSections);
     let hours = 0 , minutes = 0 , price = 0
     let problem = false 
@@ -279,7 +287,7 @@ const Calculator = () => {
     if (problem) {
       Swal.fire({
         icon: "error",
-        text: "برجاء التأكد من جميع البيانات",
+        text: "يجب إدخال  جميع البيانات",
       });
       return
     }
