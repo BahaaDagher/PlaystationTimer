@@ -107,6 +107,9 @@ export const CalcButton = styled(FlexCenter)(({ theme }) => ({
     background : Colors.hoverMain , 
   },
   "&.disappear" : {
+    [theme.breakpoints.down("600")] : {
+      width : "100%"
+    } , 
     background : Colors.red ,
     "&:hover" : {
       background : Colors.hoverRed , 
