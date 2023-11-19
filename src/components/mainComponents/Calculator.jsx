@@ -237,7 +237,7 @@ const Calculator = () => {
 
     console.log("firstTime", firstTime) 
     console.log("secondTime", secondTime)
-    if ( section.startTime==""  || section.endTime=="" || section.price=="" ) {
+    if ( section.startTime==""  || section.endTime=="" || section.price=="" || isNaN(section.price) ) {
       Swal.fire({
         icon: "error",
         text: "يجب ادخال جميع البيانات",
@@ -266,7 +266,7 @@ const Calculator = () => {
     let problem = false 
 
     timeSections.map((section , index) => {
-      if (section.startTime !== "" && section.endTime !== "" && section.price !== 0) {
+      if (section.startTime !== "" && section.endTime !== "" && section.price !== "" && !isNaN(section.price) ) {
         hours += section.totalTime.hours
         minutes += section.totalTime.minutes
         price += section.totalPrice
@@ -296,6 +296,7 @@ const Calculator = () => {
   };
 
   const DeleteTime = (index) => {
+    setShowAllTime(false) ; 
     console.log("delete", index);
     setTimeSections((prevSections) =>
       prevSections.filter((prevSection, i) =>
@@ -317,7 +318,6 @@ const Calculator = () => {
         <Title>
         Playstation
         </Title>
-        
         <Container>
           {timeSections.map((section, index) => (
             <TimerParent>
@@ -329,14 +329,16 @@ const Calculator = () => {
                     type="time"
                     id={`sTime${index}`}
                     value = {section.startTime}
-                    onChange={(e) =>
+                    onChange={(e) => {
+                      setShowAllTime(false) ; 
                       setTimeSections((prevSections) =>
                         prevSections.map((prevSection, i) =>
                           i === index
-                            ? { ...prevSection, startTime: e.target.value }
+                            ? { ...prevSection, startTime: e.target.value  , show : false}
                             : prevSection
                         )
                       )
+                    }
                     }
                   />
                 </TimeSection>
@@ -346,14 +348,16 @@ const Calculator = () => {
                     type="time"
                     id={`ETime${index}`}
                     value = {section.endTime}
-                    onChange={(e) =>
+                    onChange={(e) =>{
+                      setShowAllTime(false) ; 
                       setTimeSections((prevSections) =>
                         prevSections.map((prevSection, i) =>
                           i === index
-                            ? { ...prevSection, endTime: e.target.value }
+                            ? { ...prevSection, endTime: e.target.value , show : false }
                             : prevSection
                         )
                       )
+                    }
                     }
                   />
                 </TimeSection>
@@ -363,14 +367,16 @@ const Calculator = () => {
                     type="number"
                     id={`price${index}`}
                     value = {section.price}
-                    onChange={(e) =>
+                    onChange={(e) =>{
+                      setShowAllTime(false) ; 
                       setTimeSections((prevSections) =>
                         prevSections.map((prevSection, i) =>
                           i === index
-                            ? { ...prevSection, price: parseFloat(e.target.value) }
+                            ? { ...prevSection, price: parseFloat(e.target.value)  , show : false }
                             : prevSection
                         )
                       )
+                    }
                     }
                   />
                 </TimeSection>
