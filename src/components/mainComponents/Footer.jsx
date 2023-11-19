@@ -5,8 +5,8 @@ import { FlexCenter } from "../FlexCenter";
 
 export const Footer = styled(FlexCenter)(({ theme }) => ({
     width : "100%" , 
-    backgroundColor : "#000" , 
+    backgroundColor : "#02020a" , 
     color  : "#fff" , 
-    padding : "5px" ,
+    padding : "8px" ,
     textAlign : "center" , 
 }));

@@ -414,7 +414,7 @@ const Calculator = () => {
             </OneResult>
           }
         </Result>
-        <Footer style = {{direction : "ltr"}}>&copy; Bahaa Dagher </Footer>
+        <Footer style = {{direction : "ltr"}}>&copy; Bahaa Dagher , 2023 </Footer>
       </Parent>
     </>
   )
