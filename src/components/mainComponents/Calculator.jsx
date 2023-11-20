@@ -7,6 +7,7 @@ import { Flex } from '../Flex';
 import { FlexSpaceBetween } from '../FlexSpaceBetween';
 import { Footer } from './Footer';
 import ps from "../../assets/ps.jpg"
+import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined';
 
 export const Parent = styled(Flex)(({ theme }) => ({
   alignItems: "center",
@@ -283,7 +284,6 @@ const Calculator = () => {
         problem = true
       }     
     })
-   
     if (problem) {
       Swal.fire({
         icon: "error",
@@ -291,7 +291,6 @@ const Calculator = () => {
       });
       return
     }
-
     let hoursFromMinutes = Math.floor(minutes / 60)
     let minutesFromMinutes = minutes % 60
     hours += hoursFromMinutes
@@ -428,7 +427,15 @@ const Calculator = () => {
             </OneResult>
           }
         </Result>
-        <Footer style = {{direction : "ltr"}}>&copy; Bahaa Dagher , 2023 </Footer>
+        <Footer style = {{direction : "ltr"}}>
+          &copy; Bahaa Dagher , 2023 
+          <FacebookOutlinedIcon 
+            style = {{marginLeft :"10px" , cursor : "pointer"}}
+            onClick = {()=>{
+              window.open("https://www.facebook.com/bahaa.dagher.1/")
+            }}
+            />
+        </Footer>
       </Parent>
     </>
   )
