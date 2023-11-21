@@ -23,6 +23,8 @@ export const Title = styled("div")(({ theme }) => ({
   fontSize: "40px",
   fontWeight: "600",
   color : Colors.bgBL ,
+  borderRadius : "10px" , 
+  borderBottom : `2px solid ${Colors.red}`
 }));
 export const Container = styled("div")(({ theme }) => ({
   padding: "20px",
@@ -169,14 +171,34 @@ export const ButtonsContainer = styled(FlexSpaceBetween)(({ theme }) => ({
 export const Price = styled("span")(({ theme }) => ({
   color : "red" ,
   fontSize : "25px" ,  
-
 }));
 
 const Calculator = () => {
+  const arabicNumber = {
+    '1':'١' , 
+    '2':'٢' , 
+    '3':'٣' ,
+    '4':'٤' ,
+    '5':'٥' ,
+    '6':'٦' ,
+    '7':'٧' ,
+    '8':'٨' ,
+    '9':'٩' ,
+    '0':'٠' ,
+    '.':',' , 
+  }
 
   const formatNumberToArabic = (number) => {
-    return number.toLocaleString('ar-EG');
+    const str = number.toString()
+    let result = ""
+    for (let i = 0; i < str.length; i++) {
+      result += arabicNumber[str[i]]
+    }
+    return result
   };
+  // const formatNumberToArabic = (number) => {
+  //   return number.toLocaleString('ar-EG');
+  // };
 
   const TimeConvert = (time)=> {
     let sHours , sMinutes 
@@ -188,9 +210,8 @@ const Calculator = () => {
   const [timeSections, setTimeSections] = useState([
     { startTime: "", endTime: "", price: "", totalTime: {hours : 0 , minutes :0}, totalPrice: 0 , show : false },
   ]);
-
+  
   useEffect(() => {
-    console.log(timeSections);
     timeSections.map((section , index) => {
       if (section.startTime !== "" && section.endTime !== "" && section.price !== "") {
         let firstTime = TimeConvert(section.startTime)
@@ -214,6 +235,7 @@ const Calculator = () => {
       }
     }
     )
+    
   }, [timeSections]);
 
   const addTimeSection = () => {
@@ -237,8 +259,6 @@ const Calculator = () => {
     let firstTime = TimeConvert(section.startTime)
     let secondTime = TimeConvert(section.endTime)
 
-    console.log("firstTime", firstTime) 
-    console.log("secondTime", secondTime)
     if ( section.startTime==""  || section.endTime=="" || section.price=="" || isNaN(section.price) ) {
       Swal.fire({
         icon: "error",
@@ -250,7 +270,6 @@ const Calculator = () => {
     }
     
     editTimeSection(index , section)
-    console.log("***************************", )
 
   }
 
@@ -270,7 +289,6 @@ const Calculator = () => {
       });
       return
     }
-    console.log(timeSections);
     let hours = 0 , minutes = 0 , price = 0
     let problem = false 
 
@@ -304,7 +322,6 @@ const Calculator = () => {
 
   const DeleteTime = (index) => {
     setShowAllTime(false) ; 
-    console.log("delete", index);
     setTimeSections((prevSections) =>
       prevSections.filter((prevSection, i) =>
         i !== index
@@ -323,11 +340,11 @@ const Calculator = () => {
     <>
       <Parent>
         <Title>
-        Playstation
+          <span style = {{color : Colors.red , fontWeight : "bold" , fontSize : "50px"}}>Vivo</span> Playstation
         </Title>
         <Container>
           {timeSections.map((section, index) => (
-            <TimerParent>
+            <TimerParent key = {index}>
               <DeleteIcon onClick={()=>{DeleteTime(index)}}>×</DeleteIcon>
               <Timer key={index}>
                 <TimeSection>
@@ -428,13 +445,14 @@ const Calculator = () => {
           }
         </Result>
         <Footer style = {{direction : "ltr"}}>
-          &copy; Bahaa Dagher , 2023 
           <FacebookOutlinedIcon 
-            style = {{marginLeft :"10px" , cursor : "pointer"}}
+            style = {{margin :"0 10px" , cursor : "pointer"}}
             onClick = {()=>{
               window.open("https://www.facebook.com/bahaa.dagher.1/")
             }}
             />
+             
+           {formatNumberToArabic(2023)} , <span style = {{color : Colors.red , fontWeight : "bold" , margin  :"0 10px" }}> تصميم المهندس بهاء داغر </span>   &copy;
         </Footer>
       </Parent>
     </>
